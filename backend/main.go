@@ -24,7 +24,8 @@ func main() {
 	v1 := e.Group("/api/v1")
 
 	v1.GET("/ping", Pong)
-	v1.POST("/register", Register)
+	// v1.POST("/register", db.Register)
+	v1.POST("/login", Login)
 
 	e.Logger.Fatal(e.Start(":1881"))
 }
@@ -33,29 +34,27 @@ func Pong(c echo.Context) error {
 	return c.String(http.StatusOK, "Pong")
 }
 
-func Register(c echo.Context) error {
-	cn := db.Connect()
-	u := new(dto.User)
+func Login(c echo.Context) error {
+	cn := db.Conn()
+	rq := new(dto.Login)
 
-	if err := c.Bind(u); err != nil {
+	if err := c.Bind(rq); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	if err := c.Validate(u); err != nil {
+	if err := c.Validate(rq); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	res := cn.Model(&models.User{}).Find(&u, "username = ? or email = ?", u.Username, u.Email)
-
-	if res.RowsAffected != 0 {
-		return c.JSON(http.StatusBadRequest, "user already exists")
+	var u models.User
+	err := cn.First(&u, "username = ?", rq.Username).Error
+	if err == nil {
+		err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(rq.Password))
+		if err == nil {
+			return c.JSON(http.StatusOK, models.Response(models.CreateJWT(int(u.ID)), "Successfully logged in"))
+		} else {
+			return echo.NewHTTPError(http.StatusBadRequest, "Wrong credentials")
+		}
 	}
-
-	cn.Create(&models.User{Username: u.Username, Password: HashPassword(u.Password), Email: u.Email})
-	return c.JSON(http.StatusOK, "User Created Successfully")
-}
-
-func HashPassword(password string) string {
-	bytes, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes)
+	return err
 }

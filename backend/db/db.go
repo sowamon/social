@@ -1,15 +1,20 @@
 package db
 
 import (
-  "fmt"
-  "os"
-  "gorm.io/driver/mysql"
-  "gorm.io/gorm"
+	"backend/models"
+	"os"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-func Connect() *gorm.DB {
-  fmt.Println(os.Getenv("CONNECTION_STRING"))
-  db, _ := gorm.Open(mysql.Open(os.Getenv("CONNECTION_STRING")), &gorm.Config{})
-  return db
-}
+var db *gorm.DB
 
+func Conn() *gorm.DB {
+	if db != nil {
+		return db
+	}
+	db, _ = gorm.Open(mysql.Open(os.Getenv("CONNECTION_STRING")), &gorm.Config{})
+	db.AutoMigrate(&models.User{})
+	return db
+}
