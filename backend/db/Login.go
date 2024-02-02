@@ -9,6 +9,14 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// @Summary Login
+// @Description Login
+// @ID get-string-by-int
+// @Accept  json
+// @Produce  json
+// @Param username path dto.Login true "Account"
+// @Header 200 {string} Token "qwerty"
+// @Router /api/v1/login [post]
 func Login(c echo.Context) error {
 	cn := Conn()
 	rq := new(dto.Login)
