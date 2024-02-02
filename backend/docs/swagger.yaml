@@ -1,0 +1,28 @@
+basePath: /api/v1
+host: localhost:1881
+info:
+  contact: {}
+  description: Test
+  title: Social API
+  version: "1.0"
+paths:
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      operationId: get-string-by-int
+      parameters:
+      - in: path
+        name: password
+        required: true
+        type: string
+      - in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Login
+swagger: "2.0"

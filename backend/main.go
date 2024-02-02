@@ -8,14 +8,22 @@ import (
 	"net/http"
 	"os"
 
+	_ "backend/docs"
+
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/joho/godotenv"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
+// @title Social API
+// @version 1.0
+// @description Test
+// @host localhost:1881
+// @BasePath /api/v1
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -45,6 +53,7 @@ func main() {
 
 	r.POST("/post", Post)
 
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))
 }
 
