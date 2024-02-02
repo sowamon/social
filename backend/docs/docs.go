@@ -42,6 +42,40 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/api/v1/register": {
+            "post": {
+                "description": "Register",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Register",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
         }
     }
 }`

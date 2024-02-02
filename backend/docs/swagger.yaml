@@ -25,4 +25,27 @@ paths:
       - application/json
       responses: {}
       summary: Login
+  /api/v1/register:
+    post:
+      consumes:
+      - application/json
+      description: Register
+      operationId: register
+      parameters:
+      - in: path
+        name: email
+        required: true
+        type: string
+      - in: path
+        name: password
+        required: true
+        type: string
+      - in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Register
 swagger: "2.0"

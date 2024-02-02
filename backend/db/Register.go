@@ -9,6 +9,14 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// @Summary Register
+// @Description Register
+// @ID register
+// @Accept  json
+// @Produce  json
+// @Param username path dto.Register true "Account"
+// @Header 200 {string} Token "qwerty"
+// @Router /api/v1/register [post]
 func Register(c echo.Context) error {
 	cn := Conn()
 	rq := new(dto.Register)
