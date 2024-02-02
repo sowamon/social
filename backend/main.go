@@ -51,7 +51,7 @@ func main() {
 	v1.POST("/register", db.Register)
 	v1.POST("/login", db.Login)
 
-	r.POST("/post", Post)
+	r.POST("/post", db.Post)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))
@@ -59,25 +59,4 @@ func main() {
 
 func Pong(c echo.Context) error {
 	return c.String(http.StatusOK, "DURSUN ÖZBEK İSTİFA")
-}
-
-func Post(c echo.Context) error {
-	cn := db.Conn()
-	rq := new(dto.Post)
-
-	if err := c.Bind(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-
-	if err := c.Validate(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-
-	user := c.Get("user").(*jwt.Token)
-	claims := models.ReadJWT(user)
-
-	p := models.Post{OwnerID: claims.UserId, Content: rq.Content, Attach: rq.Attach}
-	cn.Create(&p)
-
-	return c.JSON(http.StatusOK, models.Response(nil, "Successfully Posted"))
 }
