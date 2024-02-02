@@ -9,6 +9,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @Summary Message
+// @Description Message
+// @ID message
+// @Accept  json
+// @Produce  json
+// @Param username path dto.Message true "Message"
+// @Header 200 {string} Token "qwerty"
+// @Router /api/v1/message [post]
 func Message(c echo.Context) error {
 	cn := Conn()
 	rq := new(dto.Message)

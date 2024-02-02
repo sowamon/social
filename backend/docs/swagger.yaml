@@ -25,6 +25,26 @@ paths:
       - application/json
       responses: {}
       summary: Login
+  /api/v1/message:
+    post:
+      consumes:
+      - application/json
+      description: Message
+      operationId: message
+      parameters:
+      - in: path
+        name: attach
+        type: string
+      - in: path
+        name: content
+        type: string
+      - in: path
+        name: reciever
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Message
   /api/v1/post:
     post:
       consumes:

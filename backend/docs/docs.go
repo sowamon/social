@@ -43,6 +43,37 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/api/v1/message": {
+            "post": {
+                "description": "Message",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Message",
+                "operationId": "message",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "attach",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "name": "content",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "reciever",
+                        "in": "path"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/v1/post": {
             "post": {
                 "description": "Post",
