@@ -51,6 +51,7 @@ func main() {
 	v1.POST("/register", db.Register)
 	v1.POST("/login", db.Login)
 
+	r.POST("/message", db.Message)
 	r.POST("/post", db.Post)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)

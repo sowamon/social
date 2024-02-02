@@ -15,6 +15,6 @@ func Conn() *gorm.DB {
 		return db
 	}
 	db, _ = gorm.Open(mysql.Open(os.Getenv("CONNECTION_STRING")), &gorm.Config{})
-	db.AutoMigrate(&models.User{}, &models.Post{})
+	db.AutoMigrate(&models.User{}, &models.Post{}, &models.Message{})
 	return db
 }
