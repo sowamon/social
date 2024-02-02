@@ -29,7 +29,7 @@ func Register(c echo.Context) error {
 	}
 
 	u = models.User{Username: rq.Username, Password: HashPassword(rq.Password), Email: rq.Email}
-	token := models.CreateJWT(int(u.ID))
+	token := models.CreateJWT(u.ID)
 	cn.Create(&u)
 	return c.JSON(http.StatusOK, models.Response(
 		RegisterResponse(u.Username, token),

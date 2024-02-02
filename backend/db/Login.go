@@ -26,7 +26,7 @@ func Login(c echo.Context) error {
 	if err == nil {
 		err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(rq.Password))
 		if err == nil {
-			return c.JSON(http.StatusOK, models.Response(models.CreateJWT(int(u.ID)), "Successfully logged in"))
+			return c.JSON(http.StatusOK, models.Response(models.CreateJWT(u.ID), "Successfully logged in"))
 		} else {
 			return echo.NewHTTPError(http.StatusBadRequest, "Wrong credentials")
 		}

@@ -14,3 +14,10 @@ Login
   username: string,
   password: string
 ```
+
+Post
+
+```bash
+  content: string,
+  attach?: string
+```
