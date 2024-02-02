@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "summary": "Login",
-                "operationId": "get-string-by-int",
+                "operationId": "login",
                 "parameters": [
                     {
                         "type": "string",
@@ -36,6 +36,33 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/post": {
+            "post": {
+                "description": "Post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Post",
+                "operationId": "post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "attach",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "name": "content",
                         "in": "path",
                         "required": true
                     }

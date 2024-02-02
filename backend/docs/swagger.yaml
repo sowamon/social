@@ -11,7 +11,7 @@ paths:
       consumes:
       - application/json
       description: Login
-      operationId: get-string-by-int
+      operationId: login
       parameters:
       - in: path
         name: password
@@ -25,6 +25,24 @@ paths:
       - application/json
       responses: {}
       summary: Login
+  /api/v1/post:
+    post:
+      consumes:
+      - application/json
+      description: Post
+      operationId: post
+      parameters:
+      - in: path
+        name: attach
+        type: string
+      - in: path
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Post
   /api/v1/register:
     post:
       consumes:
