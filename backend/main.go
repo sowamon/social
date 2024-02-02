@@ -49,7 +49,7 @@ func main() {
 }
 
 func Pong(c echo.Context) error {
-	return c.String(http.StatusOK, "Pong")
+	return c.String(http.StatusOK, "DURSUN ÖZBEK İSTİFA")
 }
 
 func Post(c echo.Context) error {
