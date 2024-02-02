@@ -63,12 +63,14 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "content",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "integer",
                         "name": "reciever",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}
