@@ -1,11 +1,8 @@
 package db
 
 import (
-	"backend/dto"
 	"backend/models"
-	"net/http"
 
-	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -17,32 +14,23 @@ import (
 // @Param username path dto.Register true "Account"
 // @Header 200 {string} Token "qwerty"
 // @Router /api/v1/register [post]
-func Register(c echo.Context) error {
+func AuthRegister(username string, email string, password string) (models.IResponse, int) {
 	cn := Conn()
-	rq := new(dto.Register)
-
-	if err := c.Bind(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-
-	if err := c.Validate(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
 
 	var u models.User
-	err := cn.First(&u, "username = ? or email = ?", rq.Username, rq.Email).Error
+	err := cn.First(&u, "username = ? or email = ?", username, email).Error
 
 	if err == nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "User already exists")
+		return models.Response(nil, "User already exists"), 400
 	}
 
-	u = models.User{Username: rq.Username, Password: HashPassword(rq.Password), Email: rq.Email}
+	u = models.User{Username: username, Password: HashPassword(password), Email: email}
 	token := models.CreateJWT(u.ID)
 	cn.Create(&u)
-	return c.JSON(http.StatusOK, models.Response(
+	return models.Response(
 		RegisterResponse(u.Username, token),
 		"Account Created Successfully",
-	))
+	), 200
 }
 
 func HashPassword(password string) string {

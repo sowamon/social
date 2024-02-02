@@ -4,6 +4,7 @@ import (
 	"backend/db"
 	"backend/dto"
 	"backend/models"
+	"backend/router/account"
 	"fmt"
 	"net/http"
 	"os"
@@ -36,20 +37,20 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{"*"},
 	}))
+
 	v1 := e.Group("/api/v1")
+
+	v1.GET("/ping", Pong)
+	v1.POST("/register", account.Register)
+	v1.POST("/login", account.Login)
+
 	r := v1.Group("") //restricted
-	config := echojwt.Config{
+	r.Use(echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(models.JwtCustomClaims)
 		},
 		SigningKey: []byte(os.Getenv("SECRET_KEY")),
-	}
-	r.Use(echojwt.WithConfig(config))
-
-	v1.GET("/ping", Pong)
-
-	v1.POST("/register", db.Register)
-	v1.POST("/login", db.Login)
+	}))
 
 	r.POST("/message", db.Message)
 	r.POST("/post", db.Post)

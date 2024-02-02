@@ -1,11 +1,8 @@
 package db
 
 import (
-	"backend/dto"
 	"backend/models"
-	"net/http"
 
-	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,34 +11,25 @@ import (
 // @ID login
 // @Accept  json
 // @Produce  json
-// @Param username path dto.Login true "Account"
+// @Param username path account.LoginDTO true "Account"
 // @Header 200 {string} Token "qwerty"
 // @Router /api/v1/login [post]
-func Login(c echo.Context) error {
+func AuthLogin(username string, password string) (models.IResponse, int) {
 	cn := Conn()
-	rq := new(dto.Login)
-
-	if err := c.Bind(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-
-	if err := c.Validate(rq); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
 
 	var u models.User
-	err := cn.First(&u, "username = ?", rq.Username).Error
+	err := cn.First(&u, "username = ?", username).Error
 	if err == nil {
-		err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(rq.Password))
+		err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 		if err == nil {
-			return c.JSON(http.StatusOK, models.Response(map[string]interface{}{
+			return models.Response(map[string]interface{}{
 				"user":  u,
 				"token": models.CreateJWT(u.ID),
-			}, "Successfully logged in"))
+			}, "Successfully logged in"), 200
 		} else {
-			return echo.NewHTTPError(http.StatusBadRequest, "Wrong credentials")
+			return models.Response(nil, "Wrong credentials"), 400
 		}
 	} else {
-		return echo.NewHTTPError(http.StatusBadRequest, "Wrong credentials")
+		return models.Response(nil, "Wrong credentials"), 400
 	}
 }
