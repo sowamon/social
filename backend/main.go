@@ -5,6 +5,7 @@ import (
 	"backend/dto"
 	"backend/models"
 	"backend/router/account"
+	"backend/router/message"
 	"fmt"
 	"net/http"
 	"os"
@@ -52,8 +53,9 @@ func main() {
 		SigningKey: []byte(os.Getenv("SECRET_KEY")),
 	}))
 
-	r.POST("/message", db.Message)
+	r.POST("/message", message.Send)
 	r.POST("/post", db.Post)
+	r.GET("/message", message.Get)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))
