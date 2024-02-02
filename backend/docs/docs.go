@@ -44,16 +44,47 @@ const docTemplate = `{
             }
         },
         "/api/v1/message": {
-            "post": {
-                "description": "Message",
+            "get": {
+                "description": "Get Message",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Message",
-                "operationId": "message",
+                "summary": "GetMessage",
+                "operationId": "getMessage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "attach",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "name": "content",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "reciever",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "description": "SendMessage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "SendMessage",
+                "operationId": "sendMessage",
                 "parameters": [
                     {
                         "type": "string",
