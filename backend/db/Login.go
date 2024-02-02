@@ -11,7 +11,7 @@ import (
 
 // @Summary Login
 // @Description Login
-// @ID get-string-by-int
+// @ID login
 // @Accept  json
 // @Produce  json
 // @Param username path dto.Login true "Account"
