@@ -9,6 +9,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -19,6 +20,10 @@ func main() {
 
 	e := echo.New()
 	e.Validator = dto.Constructor(validator.New())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"*"},
+	}))
 	v1 := e.Group("/api/v1")
 
 	v1.GET("/ping", Pong)
