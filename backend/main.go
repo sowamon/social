@@ -6,6 +6,7 @@ import (
 	"backend/models"
 	"backend/router/account"
 	"backend/router/message"
+	"backend/router/post"
 	"fmt"
 	"net/http"
 	"os"
@@ -54,8 +55,10 @@ func main() {
 	}))
 
 	r.POST("/message", message.Send)
-	r.POST("/post", db.Post)
 	r.GET("/message", message.Get)
+
+	r.POST("/post", db.Post)
+	r.GET("/post", post.Get)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))

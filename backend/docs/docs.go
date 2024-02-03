@@ -108,6 +108,25 @@ const docTemplate = `{
             }
         },
         "/api/v1/post": {
+            "get": {
+                "description": "Get Posts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Post",
+                "operationId": "getPost",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "cursor",
+                        "in": "path"
+                    }
+                ],
+                "responses": {}
+            },
             "post": {
                 "description": "Post",
                 "consumes": [

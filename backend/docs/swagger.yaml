@@ -69,6 +69,19 @@ paths:
       responses: {}
       summary: SendMessage
   /api/v1/post:
+    get:
+      consumes:
+      - application/json
+      description: Get Posts
+      operationId: getPost
+      parameters:
+      - in: path
+        name: cursor
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get Post
     post:
       consumes:
       - application/json
