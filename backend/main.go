@@ -1,7 +1,6 @@
 package main
 
 import (
-	"backend/db"
 	"backend/dto"
 	"backend/models"
 	"backend/router/account"
@@ -57,7 +56,7 @@ func main() {
 	r.POST("/message", message.Send)
 	r.GET("/message", message.Get)
 
-	r.POST("/post", db.Post)
+	r.POST("/post", post.Post)
 	r.GET("/post", post.Get)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
