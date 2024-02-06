@@ -1,185 +1,161 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "description": "Test",
-        "title": "Social API",
-        "contact": {},
-        "version": "1.0"
+  "swagger": "2.0",
+  "info": {
+    "description": "Test",
+    "title": "Social API",
+    "contact": {},
+    "version": "1.0"
+  },
+  "host": "localhost:1881",
+  "basePath": "/api/v1",
+  "paths": {
+    "/api/v1/login": {
+      "post": {
+        "description": "Login",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Login",
+        "operationId": "login",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "password",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "username",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
     },
-    "host": "localhost:1881",
-    "basePath": "/api/v1",
-    "paths": {
-        "/api/v1/login": {
-            "post": {
-                "description": "Login",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Login",
-                "operationId": "login",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "password",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "name": "username",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/api/v1/message": {
-            "get": {
-                "description": "Get Message",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "GetMessage",
-                "operationId": "getMessage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "attach",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "name": "content",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "reciever",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
-            "post": {
-                "description": "SendMessage",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "SendMessage",
-                "operationId": "sendMessage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "attach",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "name": "content",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "name": "reciever",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/api/v1/post": {
-            "get": {
-                "description": "Get Posts",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get Post",
-                "operationId": "getPost",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "name": "cursor",
-                        "in": "path"
-                    }
-                ],
-                "responses": {}
-            },
-            "post": {
-                "description": "Post",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Post",
-                "operationId": "post",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "attach",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "name": "content",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/api/v1/register": {
-            "post": {
-                "description": "Register",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Register",
-                "operationId": "register",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "email",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "name": "password",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "name": "username",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            }
-        }
+    "/api/v1/message": {
+      "get": {
+        "description": "Get Message",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "GetMessage",
+        "operationId": "getMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "attach",
+            "in": "path"
+          },
+          {
+            "type": "string",
+            "name": "content",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "name": "receiver",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "description": "SendMessage",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "SendMessage",
+        "operationId": "sendMessage",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "attach",
+            "in": "path"
+          },
+          {
+            "type": "string",
+            "name": "content",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "name": "receiver",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/post": {
+      "get": {
+        "description": "Get Posts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Get Post",
+        "operationId": "getPost",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "cursor",
+            "in": "path"
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "description": "Post",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Post",
+        "operationId": "post",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "attach",
+            "in": "path"
+          },
+          {
+            "type": "string",
+            "name": "content",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/register": {
+      "post": {
+        "description": "Register",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Register",
+        "operationId": "register",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "email",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "password",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "username",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
     }
+  }
 }

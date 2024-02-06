@@ -17,11 +17,11 @@ import (
 // @Param username path message.SendMessage true "Message"
 // @Header 200 {string} Token "qwerty"
 // @Router /api/v1/message [post]
-func AuthSendMessage(sender uint, reciever int, content string, attach string) (models.IResponse, int) {
+func AuthSendMessage(sender uint, receiver int, content string, attach string) (models.IResponse, int) {
 	cn := Conn()
 
 	securedMessage := string(secureMessage(content))
-	m := models.Message{Sender: sender, Content: securedMessage, Reciever: reciever, Attach: attach}
+	m := models.Message{Sender: sender, Content: securedMessage, Receiver: receiver, Attach: attach}
 
 	err := cn.Create(&m).Error
 

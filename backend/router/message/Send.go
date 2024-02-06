@@ -10,7 +10,7 @@ import (
 )
 
 type SendMessage struct {
-	Reciever int    `json:"reciever" validate:"required"`
+	receiver int    `json:"receiver" validate:"required"`
 	Content  string `json:"content" validate:"required"`
 	Attach   string `json:"attach"`
 }
@@ -29,7 +29,7 @@ func Send(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := models.ReadJWT(user)
 
-	value, code := db.AuthSendMessage(claims.UserId, rq.Reciever, rq.Content, rq.Attach)
+	value, code := db.AuthSendMessage(claims.UserId, rq.receiver, rq.Content, rq.Attach)
 
 	return c.JSON(code, value)
 }

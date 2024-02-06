@@ -9,117 +9,117 @@ paths:
   /api/v1/login:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Login
       operationId: login
       parameters:
-      - in: path
-        name: password
-        required: true
-        type: string
-      - in: path
-        name: username
-        required: true
-        type: string
+        - in: path
+          name: password
+          required: true
+          type: string
+        - in: path
+          name: username
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: Login
   /api/v1/message:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get Message
       operationId: getMessage
       parameters:
-      - in: path
-        name: attach
-        type: string
-      - in: path
-        name: content
-        required: true
-        type: string
-      - in: path
-        name: reciever
-        required: true
-        type: integer
+        - in: path
+          name: attach
+          type: string
+        - in: path
+          name: content
+          required: true
+          type: string
+        - in: path
+          name: receiver
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: GetMessage
     post:
       consumes:
-      - application/json
+        - application/json
       description: SendMessage
       operationId: sendMessage
       parameters:
-      - in: path
-        name: attach
-        type: string
-      - in: path
-        name: content
-        required: true
-        type: string
-      - in: path
-        name: reciever
-        required: true
-        type: integer
+        - in: path
+          name: attach
+          type: string
+        - in: path
+          name: content
+          required: true
+          type: string
+        - in: path
+          name: receiver
+          required: true
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: SendMessage
   /api/v1/post:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get Posts
       operationId: getPost
       parameters:
-      - in: path
-        name: cursor
-        type: integer
+        - in: path
+          name: cursor
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: Get Post
     post:
       consumes:
-      - application/json
+        - application/json
       description: Post
       operationId: post
       parameters:
-      - in: path
-        name: attach
-        type: string
-      - in: path
-        name: content
-        required: true
-        type: string
+        - in: path
+          name: attach
+          type: string
+        - in: path
+          name: content
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: Post
   /api/v1/register:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Register
       operationId: register
       parameters:
-      - in: path
-        name: email
-        required: true
-        type: string
-      - in: path
-        name: password
-        required: true
-        type: string
-      - in: path
-        name: username
-        required: true
-        type: string
+        - in: path
+          name: email
+          required: true
+          type: string
+        - in: path
+          name: password
+          required: true
+          type: string
+        - in: path
+          name: username
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses: {}
       summary: Register
 swagger: "2.0"

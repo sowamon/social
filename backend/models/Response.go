@@ -1,8 +1,8 @@
 package models
 
 type IResponse struct {
-	Description string      `json:"description"`
-	Data        interface{} `json:"data"`
+	Description string
+	Data        interface{}
 }
 
 func Response(data interface{}, description string) IResponse {

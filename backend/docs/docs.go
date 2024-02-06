@@ -68,7 +68,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "name": "reciever",
+                        "name": "receiver",
                         "in": "path",
                         "required": true
                     }
@@ -99,7 +99,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "name": "reciever",
+                        "name": "receiver",
                         "in": "path",
                         "required": true
                     }

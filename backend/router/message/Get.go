@@ -10,7 +10,7 @@ import (
 )
 
 type GetMessage struct {
-	Reciever int `query:"reciever" validate:"required"`
+	receiver int `query:"receiver" validate:"required"`
 	Cursor   int `query:"cursor" validate:"omitempty"`
 }
 
@@ -29,7 +29,7 @@ func Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	data, code := db.AuthGetMessages(sender, rq.Reciever, rq.Cursor)
+	data, code := db.AuthGetMessages(sender, rq.receiver, rq.Cursor)
 
 	return c.JSON(code, data)
 }
