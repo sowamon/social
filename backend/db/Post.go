@@ -29,15 +29,21 @@ func Post(ownerId uint, content string, attach string) (models.IResponse, int) {
 // @Param username path post.GetPostDTO true "Post"
 // @Header 200 {string} Token "qwerty"
 // @Router /api/v1/post [get]
-func AuthGetPosts(cursor int) (models.IResponse, int) {
+func Get(cursor int) (models.IResponse, int) {
 	cn := Conn()
 
 	var m []models.Post
 
-	err := cn.Debug().Limit(20).Order("id DESC").Find(&m, "id <= ?", cursor).Error
-	if err == nil && len(m) != 0 {
-		return models.Response(m, "success"), 200
-	} else {
-		return models.Response(nil, "no message"), 400
+	cn = cn.Limit(20).Order("id DESC")
+
+	if cursor != 0 {
+		cn = cn.Where("id < ?", cursor)
 	}
+
+	err := cn.Find(&m).Error
+
+	if err != nil {
+		return models.Response(nil, err.Error()), 400
+	}
+	return models.Response(m, "success"), 200
 }

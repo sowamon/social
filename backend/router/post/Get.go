@@ -22,7 +22,7 @@ func Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	data, code := db.AuthGetPosts(rq.Cursor)
+	data, code := db.Get(rq.Cursor)
 
 	return c.JSON(code, data)
 }

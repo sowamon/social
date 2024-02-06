@@ -3,6 +3,7 @@ package message
 import (
 	"backend/db"
 	"backend/models"
+	"fmt"
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -10,10 +11,18 @@ import (
 )
 
 type GetMessage struct {
-	receiver int `query:"receiver" validate:"required"`
+	Receiver int `query:"receiver" validate:"required"`
 	Cursor   int `query:"cursor" validate:"omitempty"`
 }
 
+// @Summary GetMessages
+// @Description Get Message
+// @ID getMessage
+// @Accept  json
+// @Produce  json
+// @Param username path message.SendMessage true "Message"
+// @Header 200 {string} Token "qwerty"
+// @Router /api/v1/message [get]
 func Get(c echo.Context) error {
 	rq := new(GetMessage)
 
@@ -29,7 +38,9 @@ func Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	data, code := db.AuthGetMessages(sender, rq.receiver, rq.Cursor)
+	data, code := db.GetMessages(sender, rq.Receiver, rq.Cursor)
+
+	fmt.Println(data.Data)
 
 	return c.JSON(code, data)
 }

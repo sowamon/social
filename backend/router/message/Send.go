@@ -10,11 +10,19 @@ import (
 )
 
 type SendMessage struct {
-	receiver int    `json:"receiver" validate:"required"`
-	Content  string `json:"content" validate:"required"`
-	Attach   string `json:"attach"`
+	Receiver int    `validate:"required"`
+	Content  string `validate:"required"`
+	Attach   string ``
 }
 
+// @Summary SendMessage
+// @Description SendMessage
+// @ID sendMessage
+// @Accept  json
+// @Produce  json
+// @Param username path message.SendMessage true "Message"
+// @Header 200 {string} Token "qwerty"
+// @Router /api/v1/message [post]
 func Send(c echo.Context) error {
 	rq := new(SendMessage)
 
@@ -29,7 +37,7 @@ func Send(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := models.ReadJWT(user)
 
-	value, code := db.AuthSendMessage(claims.UserId, rq.receiver, rq.Content, rq.Attach)
+	value, code := db.SendMessage(claims.UserId, rq.Receiver, rq.Content, rq.Attach)
 
 	return c.JSON(code, value)
 }
