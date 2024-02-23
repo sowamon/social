@@ -1,4 +1,4 @@
-package message
+package chat
 
 import (
 	"backend/db"
@@ -9,10 +9,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type SendMessage struct {
-	ChatId  uint   `validate:"required"`
-	Content string `validate:"required"`
-	Attach  string ``
+type CreateChat struct {
+	Participant string `validate:"required"`
 }
 
 // @Summary SendMessage
@@ -23,8 +21,8 @@ type SendMessage struct {
 // @Param username path message.SendMessage true "Message"
 // @Header 200 {string} Token "qwerty"
 // @Router /api/v1/message [post]
-func Send(c echo.Context) error {
-	rq := new(SendMessage)
+func Create(c echo.Context) error {
+	rq := new(CreateChat)
 
 	if err := c.Bind(rq); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -37,7 +35,7 @@ func Send(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := models.ReadJWT(user)
 
-	value, code := db.SendMessage(claims.UserId, rq.ChatId, rq.Content, rq.Attach)
+	value, code := db.CreateChat(claims.UserId, db.GetIdByUsername(rq.Participant))
 
 	return c.JSON(code, value)
 }

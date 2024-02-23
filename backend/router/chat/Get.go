@@ -1,28 +1,29 @@
-package message
+package chat
 
 import (
 	"backend/db"
-	"fmt"
+	"backend/models"
 	"net/http"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
-type GetMessage struct {
-	ChatId uint `query:"chatId" validate:"required"`
-	Cursor int  `query:"cursor" validate:"omitempty"`
-}
+type GetChat struct{}
 
-// @Summary GetMessages
-// @Description Get Message
-// @ID getMessage
+// @Summary Get Chats
+// @Description Get Chat
+// @ID getChat
 // @Accept  json
 // @Produce  json
 // @Param username path message.SendMessage true "Message"
 // @Header 200 {string} Token "qwerty"
-// @Router /api/v1/message [get]
+// @Router /api/v1/chat [get]
 func Get(c echo.Context) error {
-	rq := new(GetMessage)
+	rq := new(GetChat)
+
+	user := c.Get("user").(*jwt.Token)
+	claims := models.ReadJWT(user)
 
 	if err := c.Bind(rq); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -32,9 +33,7 @@ func Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	data, code := db.GetMessages(rq.ChatId, rq.Cursor)
-
-	fmt.Println(data.Data)
+	data, code := db.GetChats(claims.UserId)
 
 	return c.JSON(code, data)
 }

@@ -9,16 +9,15 @@ import (
 	"fmt"
 )
 
-func GetMessages(sender uint, receiver int, cursor int) (models.IResponse, int) {
+func GetMessages(chatId uint, cursor int) (models.IResponse, int) {
 	cn := Conn()
 
 	var m []models.Message
 
-	cn = cn.Debug().
+	cn = cn.
 		Limit(40).
 		Order("id DESC").
-		Where("sender = ? AND receiver = ?", sender, receiver).
-		Where("receiver = ? AND sender = ?", receiver, sender)
+		Where("chat_id = ?", chatId)
 	if cursor != 0 {
 		cn = cn.Where("id < ?", cursor)
 	}
@@ -37,7 +36,7 @@ func GetMessages(sender uint, receiver int, cursor int) (models.IResponse, int) 
 	return models.Response(m, "success"), 200
 }
 
-func SendMessage(sender uint, receiver int, content string, attach string) (models.IResponse, int) {
+func SendMessage(sender uint, chatId uint, content string, attach string) (models.IResponse, int) {
 	cn := Conn()
 
 	var encrypted string
@@ -46,7 +45,7 @@ func SendMessage(sender uint, receiver int, content string, attach string) (mode
 		return models.Response(nil, err.Error()), 400
 	}
 
-	m := models.Message{Sender: sender, Content: encrypted, Receiver: receiver, Attach: attach}
+	m := models.Message{Sender: sender, Content: encrypted, ChatId: chatId, Attach: attach}
 
 	err = cn.Create(&m).Error
 
@@ -55,7 +54,10 @@ func SendMessage(sender uint, receiver int, content string, attach string) (mode
 	}
 
 	return models.Response(
-		nil,
+		map[string]interface{}{
+			"message": content,
+			"attach":  attach,
+		},
 		"Message sent successfully",
 	), 200
 }

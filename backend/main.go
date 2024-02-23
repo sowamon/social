@@ -4,6 +4,7 @@ import (
 	"backend/dto"
 	"backend/models"
 	"backend/router/account"
+	"backend/router/chat"
 	"backend/router/message"
 	"backend/router/post"
 	"fmt"
@@ -45,7 +46,8 @@ func main() {
 	v1.POST("/register", account.Register)
 	v1.POST("/login", account.Login)
 
-	r := v1.Group("") //restricted
+	//restricted
+	r := v1.Group("")
 	r.Use(echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(models.JwtCustomClaims)
@@ -58,6 +60,9 @@ func main() {
 
 	r.POST("/post", post.Post)
 	r.GET("/post", post.Get)
+
+	r.POST("/chat", chat.Create)
+	r.GET("/chat", chat.Get)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))
