@@ -7,4 +7,5 @@ type User struct {
 	Username string
 	Password string `json:"-"`
 	Email    string
+	Photo    string
 }

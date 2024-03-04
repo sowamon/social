@@ -7,6 +7,9 @@ import (
 func CreateChat(creatorId uint, participantId uint) (models.IResponse, int) {
 	cn := Conn()
 
+	if cn.Where("Creator = ? AND Participant = ?", creatorId, participantId).RowsAffected > 0 {
+		return models.Response(nil, "chat already exists"), 400
+	}
 	c := models.Chat{Creator: creatorId, Participant: participantId}
 	cn.Create(&c)
 
@@ -18,11 +21,13 @@ func GetChats(id uint) (models.IResponse, int) {
 
 	var chats []models.Chat
 
-	err := cn.Find(&chats).Where("id = ?", id).Error
+	err := cn.Where("Creator = ?", id).Find(&chats).Error
 
 	if err != nil {
 		return models.Response(nil, err.Error()), 400
 	}
+
+	chats[0].Participants = GetUserById(chats[0].Participant)
 
 	return models.Response(chats, "success"), 200
 }
@@ -32,7 +37,17 @@ func GetIdByUsername(username string) uint {
 
 	var u models.User
 
-	cn.Debug().Where("username = ?", username).Find(&u)
+	cn.Where("username = ?", username).Find(&u)
 
 	return u.ID
+}
+
+func GetUserById(id uint) models.User {
+	cn := Conn()
+
+	var u models.User
+
+	cn.Where("id = ?", id).Find(&u)
+
+	return u
 }
