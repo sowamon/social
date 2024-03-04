@@ -27,7 +27,9 @@ func GetChats(id uint) (models.IResponse, int) {
 		return models.Response(nil, err.Error()), 400
 	}
 
-	chats[0].Participants = GetUserById(chats[0].Participant)
+	if chats != nil {
+		chats[0].Participants = GetUserById(chats[0].Participant)
+	}
 
 	return models.Response(chats, "success"), 200
 }
