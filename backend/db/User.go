@@ -8,8 +8,8 @@ import (
 func GetUser(username string) (models.IResponse, int) {
 	cn := Conn()
 
-	var u models.User
-	err := cn.First(&u, "username = ?", username).Error
+	var u []models.User
+	err := cn.Find(&u, "username LIKE ?", "%"+username+"%").Limit(15).Error
 
 	fmt.Println(err)
 	if err == nil {
