@@ -7,6 +7,7 @@ import (
 	"backend/router/chat"
 	"backend/router/message"
 	"backend/router/post"
+	"backend/router/user"
 	"fmt"
 	"net/http"
 	"os"
@@ -63,6 +64,8 @@ func main() {
 
 	r.POST("/chat", chat.Create)
 	r.GET("/chat", chat.Get)
+
+	r.GET("/user", user.Get)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":1881"))
